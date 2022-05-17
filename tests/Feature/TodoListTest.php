@@ -61,10 +61,10 @@ class TodoListTest extends TestCase
     }
 
     /**
-     * Assert name field is required
+     * Assert name field is required when update the resource
      * 
      */
-    public function test_name_field_is_required()
+    public function test_name_field_is_required_when_storing()
     {
         $this->withExceptionHandling();
 
@@ -83,5 +83,30 @@ class TodoListTest extends TestCase
             ->assertNoContent();
 
         $this->assertDatabaseMissing('todo_lists', ['name' => $this->todolist->name]);
+    }
+
+    /**
+     * Update the spesified todo list
+     * 
+     */
+    public function test_update_todo_list()
+    {
+        $this->patchJson(route('todo-list.update', $this->todolist->id), ['name' => 'Update the name'])
+            ->assertOk();
+
+        $this->assertDatabaseHas('todo_lists', ['id' => $this->todolist->id, 'name' => 'Update the name']);
+    }
+
+    /**
+     * Assert name field is required when update the resource
+     * 
+     */
+    public function test_name_field_is_required_when_updating()
+    {
+        $this->withExceptionHandling();
+
+        $this->patchJson(route('todo-list.update', $this->todolist->id))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrorFor('name');
     }
 }
