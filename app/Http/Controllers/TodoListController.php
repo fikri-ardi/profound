@@ -26,7 +26,7 @@ class TodoListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return TodoList::create($request->all());
     }
 
     /**
