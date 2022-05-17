@@ -37,9 +37,9 @@ class TodoListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TodoList $todoList)
+    public function show(TodoList $todo_list)
     {
-        return $todoList;
+        return $todo_list;
     }
 
     /**
@@ -49,9 +49,9 @@ class TodoListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TodoListRequest $request, TodoList $todoList)
+    public function update(TodoListRequest $request, TodoList $todo_list)
     {
-        return $todoList->update($request->all());
+        return $todo_list->update($request->all());
     }
 
     /**
@@ -60,9 +60,9 @@ class TodoListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TodoList $todoList)
+    public function destroy(TodoList $todo_list)
     {
-        $todoList->delete();
+        $todo_list->delete();
         return response()->json(['message' => 'The todo list has been deleted'], Response::HTTP_NO_CONTENT);
     }
 }

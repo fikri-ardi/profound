@@ -16,7 +16,7 @@ class TodoListTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->todolist = TodoList::factory()->create();
+        $this->todolist = $this->createTodoList();
     }
 
     /**
@@ -26,7 +26,7 @@ class TodoListTest extends TestCase
     public function test_fetch_all_todo_list()
     {
         // action
-        $response = $this->getJson(route('todo-list.index'));
+        $response = $this->getJson(route('todo-lists.index'));
 
         // assertion
         $this->assertEquals($this->todolist->count(), count($response->json()));
@@ -38,7 +38,7 @@ class TodoListTest extends TestCase
      */
     public function test_fetch_single_todo_list()
     {
-        $response = $this->getJson(route('todo-list.show', $this->todolist->id))
+        $response = $this->getJson(route('todo-lists.show', $this->todolist->id))
             ->assertOk()
             ->json();
 
@@ -53,7 +53,7 @@ class TodoListTest extends TestCase
     {
         $todolist = TodoList::factory()->make();
 
-        $response = $this->postJson(route('todo-list.store', ['name' => $todolist->name]))
+        $response = $this->postJson(route('todo-lists.store', ['name' => $todolist->name]))
             ->assertCreated()
             ->json();
 
@@ -68,7 +68,7 @@ class TodoListTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->postJson(route('todo-list.store'))
+        $this->postJson(route('todo-lists.store'))
             ->assertUnprocessable()
             ->assertJsonValidationErrorFor('name');
     }
@@ -79,7 +79,7 @@ class TodoListTest extends TestCase
      */
     public function test_delete_todo_list()
     {
-        $this->deleteJson(route('todo-list.destroy', $this->todolist->id))
+        $this->deleteJson(route('todo-lists.destroy', $this->todolist->id))
             ->assertNoContent();
 
         $this->assertDatabaseMissing('todo_lists', ['name' => $this->todolist->name]);
@@ -91,7 +91,7 @@ class TodoListTest extends TestCase
      */
     public function test_update_todo_list()
     {
-        $this->patchJson(route('todo-list.update', $this->todolist->id), ['name' => 'Update the name'])
+        $this->patchJson(route('todo-lists.update', $this->todolist->id), ['name' => 'Update the name'])
             ->assertOk();
 
         $this->assertDatabaseHas('todo_lists', ['id' => $this->todolist->id, 'name' => 'Update the name']);
@@ -105,7 +105,7 @@ class TodoListTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->patchJson(route('todo-list.update', $this->todolist->id))
+        $this->patchJson(route('todo-lists.update', $this->todolist->id))
             ->assertUnprocessable()
             ->assertJsonValidationErrorFor('name');
     }
