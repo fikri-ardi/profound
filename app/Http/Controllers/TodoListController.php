@@ -6,6 +6,7 @@ use App\Models\TodoList;
 use Illuminate\Http\Request;
 use App\Http\Requests\TodoListRequest;
 use App\Http\Resources\TodoListResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class TodoListController extends Controller
 {
@@ -59,8 +60,9 @@ class TodoListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TodoList $todoList)
     {
-        //
+        $todoList->delete();
+        return response()->json(['message' => 'The todo list has been deleted'], Response::HTTP_NO_CONTENT);
     }
 }
