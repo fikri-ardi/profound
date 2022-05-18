@@ -61,7 +61,7 @@ class TodoListTest extends TestCase
     }
 
     /**
-     * Assert name field is required when update the resource
+     * Assert name field is required when store the resource
      * 
      */
     public function test_name_field_is_required_when_storing()

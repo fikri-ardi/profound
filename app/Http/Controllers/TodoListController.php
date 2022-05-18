@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\TodoList;
-use Illuminate\Http\Request;
 use App\Http\Requests\TodoListRequest;
 use App\Http\Resources\TodoListResource;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +50,7 @@ class TodoListController extends Controller
      */
     public function update(TodoListRequest $request, TodoList $todo_list)
     {
-        return $todo_list->update($request->all());
+        return tap($todo_list)->update($request->all());
     }
 
     /**
@@ -63,6 +62,6 @@ class TodoListController extends Controller
     public function destroy(TodoList $todo_list)
     {
         $todo_list->delete();
-        return response()->json(['message' => 'The todo list has been deleted'], Response::HTTP_NO_CONTENT);
+        return response()->json(['message' => 'The todo list has been deleted.'], Response::HTTP_NO_CONTENT);
     }
 }
