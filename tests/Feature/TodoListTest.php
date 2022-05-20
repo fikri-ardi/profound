@@ -26,10 +26,11 @@ class TodoListTest extends TestCase
     public function test_fetch_all_todo_list()
     {
         // action
-        $response = $this->getJson(route('todo-lists.index'));
+        $response = $this->getJson(route('todo-lists.index'))->assertOk()->json();
 
         // assertion
-        $this->assertEquals($this->todolist->count(), count($response->json()));
+        $this->assertEquals($this->todolist->count(), count($response));
+        $this->assertEquals($this->todolist->name, $response[0]['name']);
     }
 
     /**
