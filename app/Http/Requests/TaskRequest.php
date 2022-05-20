@@ -39,14 +39,4 @@ class TaskRequest extends FormRequest
         $data['todo_list_id'] = $todo_list->id;
         return Task::create($data);
     }
-
-    /**
-     * Update the specified task resource
-     * 
-     */
-    public function update($task)
-    {
-        $data = $this->all();
-        return tap($task)->update($data);
-    }
 }

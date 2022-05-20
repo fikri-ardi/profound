@@ -18,7 +18,6 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            // 'todo_list_id' => rand(TodoList::first('id')->id, TodoList::latest()->first('id')->id),
             'todo_list_id' => TodoList::factory()->create(),
             'name' => $this->faker->sentence(5),
         ];

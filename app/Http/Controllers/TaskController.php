@@ -18,7 +18,7 @@ class TaskController extends Controller
      */
     public function index(TodoList $todo_list)
     {
-        $tasks = Task::where('todo_list_id', $todo_list->id)->get();
+        $tasks = $todo_list->tasks;
         if ($tasks->isEmpty()) {
             return response()->json(['message' => 'No task data'], Response::HTTP_NOT_FOUND);
         }
@@ -33,7 +33,7 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request, TodoList $todo_list)
     {
-        return $request->insert($todo_list);
+        return $todo_list->tasks()->create($request->all());
     }
 
     /**
@@ -45,7 +45,7 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task)
     {
-        return $request->update($task);
+        return $task->update($request->all());
     }
 
     /**
