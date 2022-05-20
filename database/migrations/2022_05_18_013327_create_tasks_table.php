@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Task;
 use App\Models\TodoList;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\TaskStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -18,6 +20,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(TodoList::class)->constrained()->onDelete('cascade');
             $table->string('name', 191);
+            $table->string('status')->default(Task::NOT_STARTED);
             $table->timestamps();
         });
     }

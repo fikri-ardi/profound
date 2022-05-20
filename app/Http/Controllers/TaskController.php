@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Http\Requests\TaskRequest;
 use App\Models\TodoList;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\TaskRequest;
+use App\Http\Requests\StoreTaskRequest;
 
 use function PHPUnit\Framework\isEmpty;
+use App\Http\Requests\UpdateTaskRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -31,7 +33,7 @@ class TaskController extends Controller
      * @param  \App\Http\Requests\StoreTaskRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaskRequest $request, TodoList $todo_list)
+    public function store(StoreTaskRequest $request, TodoList $todo_list)
     {
         return $todo_list->tasks()->create($request->all());
     }
@@ -43,9 +45,9 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(TaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        return $task->update($request->all());
+        return tap($task)->update($request->all());
     }
 
     /**
