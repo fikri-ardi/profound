@@ -16,9 +16,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TodoList $todo_list)
     {
-        $tasks = Task::all();
+        $tasks = Task::where('todo_list_id', $todo_list->id)->get();
         if ($tasks->isEmpty()) {
             return response()->json(['message' => 'No task data'], Response::HTTP_NOT_FOUND);
         }
