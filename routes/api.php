@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TodoListController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::apiResource('todo-lists', TodoListController::class);
 Route::apiResource('todo-lists.tasks', TaskController::class)
