@@ -19,6 +19,7 @@ class TaskStatusTest extends TestCase
      */
     public function test_a_task_status_can_be_changed()
     {
+        $this->authUser();
         $todo_list = TodoList::factory()->hasTasks()->create();
 
         $this->patchJson(route('tasks.update', $todo_list->tasks[0]->id), ['status' => TaskStatus::STARTED])
